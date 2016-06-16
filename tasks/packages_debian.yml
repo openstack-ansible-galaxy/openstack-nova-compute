@@ -1,0 +1,8 @@
+---
+
+- name: Install Nova compute packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nova-compute

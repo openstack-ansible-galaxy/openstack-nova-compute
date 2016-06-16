@@ -1,0 +1,10 @@
+---
+
+- name: Add tun device ACL
+  lineinfile:
+    dest: /etc/libvirt/qemu.conf
+    insertafter: '^[ \t\n]"dev/rtc",'
+    line: '    "/dev/net/tun",'
+    state: present
+    backup: yes
+  when: add_tun_acl

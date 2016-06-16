@@ -1,0 +1,99 @@
+---
+
+- name: Configure nova compute
+  ini_file:
+    dest: /etc/nova/nova.conf
+    section: '{{ item.section }}'
+    option: '{{ item.option }}'
+    value: '{{ item.value }}'
+  with_items:
+    # Messaging
+    - section: DEFAULT
+      option: rpc_backend
+      value: rabbit
+    - section: oslo_messaging_rabbit
+      option: rabbit_host
+      value: '{{ rabbit_hostname }}'
+    - section: oslo_messaging_rabbit
+      option: rabbit_userid
+      value: '{{ rabbit_username }}'
+    - section: oslo_messaging_rabbit
+      option: rabbit_password
+      value: '{{ rabbit_password }}'
+    # Keystone
+    - section: DEFAULT
+      option: auth_strategy
+      value: keystone
+    - section: keystone_authtoken
+      option: auth_url
+      # value: '{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0'
+      value: '{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/'
+    - section: keystone_authtoken
+      option: auth_uri
+      value: '{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_port }}/'
+    - section: keystone_authtoken
+      option: project_domain_name
+      value: Default
+    - section: keystone_authtoken
+      option: user_domain_name
+      value: Default
+    - section: keystone_authtoken
+      option: project_name
+      value: service
+    - section: keystone_authtoken
+      option: username
+      value: nova
+    - section: keystone_authtoken
+      option: password
+      value: '{{ nova_password }}'
+    # Mgmt address
+    - section: DEFAULT
+      option: my_ip
+      value: '{{ nova_my_ip }}'
+    # Neutron
+    - section: DEFAULT
+      option: use_neutron
+      value: True
+    - section: DEFAULT
+      option: firewall_driver
+      value: nova.virt.firewall.NoopFirewallDriver
+    # VNC
+    - section: vnc
+      option: enabled
+      value: True
+    - section: vnc
+      option: vncserver_listen
+      value: 0.0.0.0
+    - section: vnc
+      option: vncserver_proxyclient_address
+      value: '{{ vncserver_proxyclient_address }}'
+    # Glance
+    - section: glance
+      option: api_servers
+      value: '{{ glance_protocol }}://{{ glance_hostname }}:{{ glance_port }}'
+    # Oslo
+    - section: oslo_concurrency
+      option: lock_path
+      value: /var/lib/nova/tmp
+  notify:
+    - Restart nova compute
+
+- name: Configure nova compute (2)
+  ini_file:
+    dest: /etc/nova/nova-compute.conf
+    section: '{{ item.section }}'
+    option: '{{ item.option }}'
+    value: '{{ item.value }}'
+  with_items:
+    # Libvirt
+    - section: libvirt
+      option: virt_type
+      value: '{{ nova_virt_type }}'
+  notify:
+    - Restart nova compute
+
+- name: Fix logdir section
+  lineinfile:
+    dest: /etc/nova/nova.conf
+    state: absent
+    regexp: '^logdir='

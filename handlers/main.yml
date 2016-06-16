@@ -1,0 +1,6 @@
+---
+
+- name: Restart nova compute
+  service:
+    name: '{{ nova_compute_service }}'
+    state: restarted
