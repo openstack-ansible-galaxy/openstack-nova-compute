@@ -91,9 +91,3 @@
       value: '{{ nova_virt_type }}'
   notify:
     - Restart nova compute
-
-- name: Fix logdir section
-  lineinfile:
-    dest: /etc/nova/nova.conf
-    state: absent
-    regexp: '^logdir='
