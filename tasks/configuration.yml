@@ -91,12 +91,13 @@
   notify:
     - Restart nova compute
 
-# Changing to 'simple' type to prevent hard depency on other roles
+# Changing to 'simple' type to prevent hard dependency on other roles
 # See: http://lists.openstack.org/pipermail/openstack-dev/2015-December/083095.html
 - name: Fix systemd type
   lineinfile:
     dest: '/usr/lib/systemd/system/openstack-nova-compute.service'
     regexp: '^Type=notify$'
     line: 'Type=simple'
+    backrefs: True
   when: ansible_os_family == 'RedHat'
-  notify: Systemd daemon reload
+  notify: Daemon reload
