@@ -4,3 +4,6 @@
   service:
     name: '{{ nova_compute_service }}'
     state: restarted
+
+- name: Systemd daemon reload
+  command: 'systemctl daemon-reload'

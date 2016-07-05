@@ -26,7 +26,6 @@
       value: keystone
     - section: keystone_authtoken
       option: auth_url
-      # value: '{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/v2.0'
       value: '{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/'
     - section: keystone_authtoken
       option: auth_uri
@@ -91,3 +90,13 @@
       value: '{{ nova_virt_type }}'
   notify:
     - Restart nova compute
+
+# Changing to 'simple' type to prevent hard depency on other roles
+# See: http://lists.openstack.org/pipermail/openstack-dev/2015-December/083095.html
+- name: Fix systemd type
+  lineinfile:
+    dest: '/usr/lib/systemd/system/openstack-nova-compute.service'
+    regexp: '^Type=notify$'
+    line: 'Type=simple'
+  when: ansible_os_family == 'RedHat'
+  notify: Systemd daemon reload
