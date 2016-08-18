@@ -4,7 +4,7 @@ nova_my_ip: '{{ ansible_default_ipv4.address }}'
 # RabbitMQ
 rabbit_hostname: 'localhost'
 rabbit_username: 'rabbit_username_default'
-rabbit_pass: 'rabbit_pass_default'
+rabbit_password: 'rabbit_pass_default'
 # Keystone
 keystone_admin_port: 35357
 keystone_hostname: 'localhost'
