@@ -20,6 +20,9 @@
     - section: oslo_messaging_rabbit
       option: rabbit_password
       value: '{{ rabbit_password }}'
+    - section: oslo_messaging_rabbit
+      option: rabbit_virtual_host
+      value: '/'
     # Keystone
     - section: DEFAULT
       option: auth_strategy
