@@ -45,6 +45,9 @@
     - section: keystone_authtoken
       option: password
       value: '{{ nova_password }}'
+    - section: keystone_authtoken
+      option: auth_version
+      value: v3
     # Mgmt address
     - section: DEFAULT
       option: my_ip

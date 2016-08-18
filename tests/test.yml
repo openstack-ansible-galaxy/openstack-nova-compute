@@ -1,48 +1,19 @@
 ---
 
+- include: test_common.yml
+
 - hosts: all
-  remote_user: root
   become: True
-  pre_tasks:
 
-    - name: Install Ubuntu Cloud archive keyring (Debian)
-      when: ansible_os_family == 'Debian'
-      apt:
-        name: ubuntu-cloud-keyring
-        state: present
-
-    - name: Enable OpenStack (Debian)
-      when: ansible_os_family == 'Debian'
-      apt_repository:
-        repo: 'deb http://ubuntu-cloud.archive.canonical.com/ubuntu trusty-updates/mitaka main'
-        state: present
-        update_cache: yes
-
-    - name: Enable OpenStack (RedHat)
-      when: ansible_os_family == 'RedHat'
-      yum:
-        name: "{{ item }}"
-        state: present
-        update_cache: yes
-      with_items:
-        - centos-release-openstack-mitaka
-        - policycoreutils-python
-
-    # Workaround for selinux errors when using sqlite DB
-    - name: Set permissive SElinux for httpd domain
-      selinux_permissive:
-        name: 'httpd_t'
-        permissive: True
-      when:
-        - ansible_selinux
-        - ansible_virtualization_type != 'docker'
   roles:
     - role: rabbitmq
-      rabbitmq_tcp_address: 0.0.0.0
+      rabbitmq_plugins:
+        - 'rabbitmq_management'
+      rabbitmq_tcp_address: '0.0.0.0'
       rabbitmq_users:
-        - vhost: /
-          user: 'openstack'
-          password: '0p3nst4ck'
+        - vhost: '/'
+          user: 'rabbit_username_default'
+          password: 'rabbit_pass_default'
 
     - role: mysql
       mysql_root_password: 'mysqlpassword'
@@ -179,9 +150,9 @@
           service_type: 'compute'
       keystone_endpoints:
         - service_name: 'keystone'
-          public_url: 'http://localhost:5000/v2.0'
-          internal_url: 'http://localhost:5000/v2.0'
-          admin_url: 'http://localhost:35357/v2.0'
+          public_url: 'http://localhost:5000/v3'
+          internal_url: 'http://localhost:5000/v3'
+          admin_url: 'http://localhost:35357/v3'
         - service_name: nova
           public_url: 'http://localhost:8774/v2/%(tenant_id)s'
           internal_url: 'http://localhost:8774/v2/%(tenant_id)s'
@@ -194,9 +165,6 @@
       novncproxy_base_url: 'http://localhost:6080/vnc_auto.html'
       nova_virt_type: qemu
       keystone_hostname: localhost
-      keystone_admin_password: 'fnordity'
-      glance_hostname: localhost
-      glance_protocol: http
-      rabbit_hostname: localhost
-      rabbit_username: 'openstack'
-      rabbit_password: '0p3nst4ck'
+      keystone_admin_password: 'admin password'
+      glance_hostname: 'localhost'
+      glance_protocol: 'http'
