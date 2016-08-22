@@ -4,7 +4,6 @@
 
 - hosts: all
   become: True
-
   roles:
     - role: rabbitmq
       rabbitmq_plugins:
@@ -166,3 +165,4 @@
       nova_virt_type: 'qemu'
       keystone_hostname: 'localhost'
       keystone_admin_password: 'admin password'
+      neutron_password: 'neutron password'

@@ -41,7 +41,7 @@
       value: service
     - section: keystone_authtoken
       option: username
-      value: nova
+      value: '{{ nova_username }}'
     - section: keystone_authtoken
       option: password
       value: '{{ nova_password }}'
@@ -59,6 +59,24 @@
     - section: DEFAULT
       option: firewall_driver
       value: nova.virt.firewall.NoopFirewallDriver
+    - section: neutron
+      option: url
+      value: '{{ neutron_protocol }}://{{ neutron_hostname }}:{{ neutron_port }}/'
+    - section: neutron
+      option: auth_url
+      value: '{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/'
+    - section: neutron
+      option: auth_type
+      value: password
+    - section: neutron
+      option: project_name
+      value: service
+    - section: neutron
+      option: username
+      value: '{{ neutron_username }}'
+    - section: neutron
+      option: password
+      value: '{{ neutron_password }}'
     # VNC
     - section: vnc
       option: enabled
