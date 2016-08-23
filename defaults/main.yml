@@ -27,6 +27,7 @@ neutron_port: 9696
 neutron_protocol: 'http'
 neutron_password: 'neutron_pass_default'
 neutron_username: 'neutron'
+neutron_metadata_secret: 'somefnordity'
 # Use 'qemu' for hosts wihout HW virtualization (i.e. CinC)
 nova_virt_type: 'kvm'
 # Used in midonet and other networking plugins

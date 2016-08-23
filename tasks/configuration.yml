@@ -80,6 +80,12 @@
     - section: neutron
       option: password
       value: '{{ neutron_password }}'
+    - section: neutron
+      option: service_metadata_proxy
+      value: True
+    - section: neutron
+      option: metadata_proxy_shared_secret
+      value: '{{ neutron_metadata_secret }}'
     # VNC
     - section: vnc
       option: enabled
