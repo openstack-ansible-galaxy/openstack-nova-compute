@@ -123,7 +123,7 @@
 
 - name: Start libvirtd
   service:
-    name: '{{ libvirtd_service }}'
+    name: '{{ libvirt_service }}'
     state: started
 
 # Changing to 'simple' type to prevent hard dependency on other roles
