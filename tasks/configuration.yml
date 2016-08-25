@@ -121,6 +121,11 @@
   notify:
     - Restart nova compute
 
+- name: Start libvirtd
+  service:
+    name: '{{ libvirt_service }}'
+    state: started
+
 # Changing to 'simple' type to prevent hard dependency on other roles
 # See: http://lists.openstack.org/pipermail/openstack-dev/2015-December/083095.html
 - name: Fix systemd type
