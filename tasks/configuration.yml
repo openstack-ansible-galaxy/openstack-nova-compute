@@ -29,10 +29,10 @@
       value: keystone
     - section: keystone_authtoken
       option: auth_url
-      value: '{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/'
+      value: '{{ openstack_nova_compute_keystone_protocol }}://{{ openstack_nova_compute_keystone_hostname }}:{{ openstack_nova_compute_keystone_admin_port }}/'
     - section: keystone_authtoken
       option: auth_uri
-      value: '{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_port }}/'
+      value: '{{ openstack_nova_compute_keystone_protocol }}://{{ openstack_nova_compute_keystone_hostname }}:{{ openstack_nova_compute_keystone_port }}/'
     - section: keystone_authtoken
       option: project_domain_name
       value: Default
@@ -44,17 +44,17 @@
       value: service
     - section: keystone_authtoken
       option: username
-      value: '{{ nova_username }}'
+      value: '{{ openstack_nova_compute_nova_username }}'
     - section: keystone_authtoken
       option: password
-      value: '{{ nova_password }}'
+      value: '{{ openstack_nova_compute_nova_password }}'
     - section: keystone_authtoken
       option: auth_version
       value: v3
     # Mgmt address
     - section: DEFAULT
       option: my_ip
-      value: '{{ nova_my_ip }}'
+      value: '{{ openstack_nova_compute_nova_my_ip }}'
     # Neutron
     - section: DEFAULT
       option: use_neutron
@@ -64,10 +64,10 @@
       value: nova.virt.firewall.NoopFirewallDriver
     - section: neutron
       option: url
-      value: '{{ neutron_protocol }}://{{ neutron_hostname }}:{{ neutron_port }}/'
+      value: '{{ openstack_nova_compute_neutron_protocol }}://{{ openstack_nova_compute_neutron_hostname }}:{{ openstack_nova_compute_neutron_port }}/'
     - section: neutron
       option: auth_url
-      value: '{{ keystone_protocol }}://{{ keystone_hostname }}:{{ keystone_admin_port }}/'
+      value: '{{ openstack_nova_compute_keystone_protocol }}://{{ openstack_nova_compute_keystone_hostname }}:{{ openstack_nova_compute_keystone_admin_port }}/'
     - section: neutron
       option: auth_type
       value: password
@@ -76,16 +76,16 @@
       value: service
     - section: neutron
       option: username
-      value: '{{ neutron_username }}'
+      value: '{{ openstack_nova_compute_neutron_username }}'
     - section: neutron
       option: password
-      value: '{{ neutron_password }}'
+      value: '{{ openstack_nova_compute_neutron_password }}'
     - section: neutron
       option: service_metadata_proxy
       value: True
     - section: neutron
       option: metadata_proxy_shared_secret
-      value: '{{ neutron_metadata_secret }}'
+      value: '{{ openstack_nova_compute_neutron_metadata_secret }}'
     # VNC
     - section: vnc
       option: enabled
@@ -95,11 +95,11 @@
       value: 0.0.0.0
     - section: vnc
       option: vncserver_proxyclient_address
-      value: '{{ vncserver_proxyclient_address }}'
+      value: '{{ openstack_nova_compute_vncserver_proxyclient_address }}'
     # Glance
     - section: glance
       option: api_servers
-      value: '{{ glance_protocol }}://{{ glance_hostname }}:{{ glance_port }}'
+      value: '{{ openstack_nova_compute_glance_protocol }}://{{ openstack_nova_compute_glance_hostname }}:{{ openstack_nova_compute_glance_port }}'
     # Oslo
     - section: oslo_concurrency
       option: lock_path
@@ -117,13 +117,13 @@
     # Libvirt
     - section: libvirt
       option: virt_type
-      value: '{{ nova_virt_type }}'
+      value: '{{ openstack_nova_compute_nova_virt_type }}'
   notify:
     - Restart nova compute
 
 - name: Start libvirtd
   service:
-    name: '{{ libvirt_service }}'
+    name: '{{ openstack_nova_compute_libvirt_service }}'
     state: started
 
 # Changing to 'simple' type to prevent hard dependency on other roles

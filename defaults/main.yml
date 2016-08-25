@@ -1,34 +1,34 @@
 ---
 # WARNING: This may not be your desired MGMT address.
-nova_my_ip: '{{ ansible_default_ipv4.address }}'
+openstack_nova_compute_nova_my_ip: '{{ ansible_default_ipv4.address }}'
 # RabbitMQ
 openstack_nova_compute_rabbit_hostname: 'localhost'
 openstack_nova_compute_rabbit_username: 'rabbit_username_default'
 openstack_nova_compute_rabbit_password: 'rabbit_pass_default'
 openstack_nova_compute_rabbit_virtual_host: '/'
 # Keystone
-keystone_admin_port: 35357
-keystone_hostname: 'localhost'
-keystone_port: 5000
-keystone_protocol: 'http'
+openstack_nova_compute_keystone_admin_port: 35357
+openstack_nova_compute_keystone_hostname: 'localhost'
+openstack_nova_compute_keystone_port: 5000
+openstack_nova_compute_keystone_protocol: 'http'
 # Nova
-vncserver_proxyclient_address: '{{ nova_my_ip }}'
-vncserver_proxy_address: '{{ nova_my_ip }}'
-novncproxy_base_url: 'http://{{ vncserver_proxy_address }}:6080/vnc_auto.html'
-nova_password: 'nova_pass_default'
-nova_username: 'nova'
+openstack_nova_compute_vncserver_proxyclient_address: '{{ openstack_nova_compute_nova_my_ip }}'
+openstack_nova_compute_vncserver_proxy_address: '{{ openstack_nova_compute_nova_my_ip }}'
+openstack_nova_compute_novncproxy_base_url: 'http://{{ openstack_nova_compute_vncserver_proxy_address }}:6080/vnc_auto.html'
+openstack_nova_compute_nova_password: 'nova_pass_default'
+openstack_nova_compute_nova_username: 'nova'
 # Glance
-glance_hostname: 'localhost'
-glance_port: 9292
-glance_protocol: 'http'
+openstack_nova_compute_glance_hostname: 'localhost'
+openstack_nova_compute_glance_port: 9292
+openstack_nova_compute_glance_protocol: 'http'
 # Neutron
-neutron_hostname: 'localhost'
-neutron_port: 9696
-neutron_protocol: 'http'
-neutron_password: 'neutron_pass_default'
-neutron_username: 'neutron'
-neutron_metadata_secret: 'somefnordity'
+openstack_nova_compute_neutron_hostname: 'localhost'
+openstack_nova_compute_neutron_port: 9696
+openstack_nova_compute_neutron_protocol: 'http'
+openstack_nova_compute_neutron_password: 'neutron_pass_default'
+openstack_nova_compute_neutron_username: 'neutron'
+openstack_nova_compute_neutron_metadata_secret: 'somefnordity'
 # Use 'qemu' for hosts wihout HW virtualization (i.e. CinC)
-nova_virt_type: 'kvm'
+openstack_nova_compute_nova_virt_type: 'kvm'
 # Used in midonet and other networking plugins
-add_tun_acl: False
+openstack_nova_compute_add_tun_acl: False
