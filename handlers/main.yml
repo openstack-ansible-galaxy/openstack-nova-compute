@@ -5,5 +5,5 @@
 
 - name: Restart nova compute
   service:
-    name: '{{ nova_compute_service }}'
+    name: '{{ openstack_nova_compute_service }}'
     state: restarted
