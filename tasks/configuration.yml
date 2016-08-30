@@ -96,6 +96,9 @@
     - section: vnc
       option: vncserver_proxyclient_address
       value: '{{ openstack_nova_compute_vncserver_proxyclient_address }}'
+    - section: vnc
+      option: novncproxy_base_url
+      value: '{{ openstack_nova_compute_novncproxy_base_url }}'
     # Glance
     - section: glance
       option: api_servers
