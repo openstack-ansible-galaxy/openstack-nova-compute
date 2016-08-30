@@ -13,8 +13,8 @@ openstack_nova_compute_keystone_port: 5000
 openstack_nova_compute_keystone_protocol: 'http'
 # Nova
 openstack_nova_compute_vncserver_proxyclient_address: '{{ openstack_nova_compute_nova_my_ip }}'
-openstack_nova_compute_vncserver_proxy_address: '{{ openstack_nova_compute_nova_my_ip }}'
-openstack_nova_compute_novncproxy_base_url: 'http://{{ openstack_nova_compute_vncserver_proxy_address }}:6080/vnc_auto.html'
+openstack_nova_compute_novncproxy_base_url_ip: '{{ ansible_default_ipv4.address }}'
+openstack_nova_compute_novncproxy_base_url: 'http://{{ openstack_nova_compute_novncproxy_base_url_ip }}:6080/vnc_auto.html'
 openstack_nova_compute_nova_password: 'nova_pass_default'
 openstack_nova_compute_nova_username: 'nova'
 # Glance
