@@ -1,8 +1,5 @@
 ---
 
-- name: Daemon reload
-  command: 'systemctl daemon-reload'
-
 - name: Restart nova compute
   service:
     name: '{{ openstack_nova_compute_service }}'
