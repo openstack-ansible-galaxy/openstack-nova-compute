@@ -1,0 +1,31 @@
+---
+
+- block:
+    - name: 'Create drop-in directory for openstack-nova-compute.service'
+      file:
+        path: '/etc/systemd/system/openstack-nova-compute.service.d'
+        state: directory
+
+    # Changing to 'simple' type to prevent hard dependency on other roles
+    # See: http://lists.openstack.org/pipermail/openstack-dev/2015-December/083095.html
+    - name: 'Fix systemd type for openstack-nova-compute.service'
+      copy:
+        content: |
+          [Service]
+          Type=simple
+        dest: '/etc/systemd/system/openstack-nova-compute.service.d/type.conf'
+      register: openstack_nova_compute_service_d_type_conf
+
+    - name: 'Reload systemd manager configuration'
+      command: 'systemctl daemon-reload'
+      when: openstack_nova_compute_service_d_type_conf|changed
+  when: ansible_os_family == 'RedHat'
+
+- name: 'Start and enable services'
+  service:
+    enabled: True
+    name: '{{ item }}'
+    state: started
+  with_items:
+    - '{{ openstack_nova_compute_libvirt_service }}'
+    - '{{ openstack_nova_compute_service }}'
