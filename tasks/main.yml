@@ -10,6 +10,8 @@
 
 - include: configuration.yml
 
+- include: libvirt.yml
+
 - include: services.yml
 
 - meta: flush_handlers
