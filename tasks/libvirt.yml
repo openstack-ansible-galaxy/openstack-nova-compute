@@ -1,10 +1,15 @@
 ---
 
-- name: Add tun device ACL
-  lineinfile:
-    dest: /etc/libvirt/qemu.conf
-    insertafter: '^[ \t\n]"dev/rtc",'
-    line: '    "/dev/net/tun",'
-    state: present
-    backup: yes
+- name: Add tun device ACL to qemu.conf
+  blockinfile:
+    dest: '/etc/libvirt/qemu.conf'
+    backup: True
+    block: |
+      cgroup_device_acl = [
+          "/dev/null", "/dev/full", "/dev/zero",
+          "/dev/random", "/dev/urandom",
+          "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+          "/dev/rtc","/dev/hpet", "/dev/vfio/vfio",
+          "/dev/net/tun"
+      ]
   when: openstack_nova_compute_add_tun_acl
