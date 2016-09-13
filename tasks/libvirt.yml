@@ -12,4 +12,25 @@
           "/dev/rtc","/dev/hpet", "/dev/vfio/vfio",
           "/dev/net/tun"
       ]
-  when: openstack_nova_compute_add_tun_acl
+
+- name: Create selinux custom policy path
+  file:
+    path: '{{ openstack_nova_compute_selinux_policy_dir }}'
+    state: directory
+    owner: root
+    group: root
+    mode: 0750
+  when: ansible_os_family == 'RedHat'
+
+- name: Copy custom selinux policy
+  copy:
+    src: qemu-kvm-tun.te
+    dest: '{{ openstack_nova_compute_selinux_policy_dir }}/qemu-kvm-tun.te'
+    register: custom_policy_output
+  when: ansible_os_family == 'RedHat'
+
+- name: Load custom selinux policy
+  command: /usr/sbin/semodule -u {{ openstack_nova_compute_selinux_policy_dir }}/qemu-kvm-tun.te
+  when:
+    - ansible_os_family == 'RedHat'
+    - custom_policy_output.changed
