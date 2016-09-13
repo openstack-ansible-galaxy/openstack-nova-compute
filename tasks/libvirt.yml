@@ -24,13 +24,13 @@
 
 - name: Copy custom selinux policy
   copy:
-    src: qemu-kvm-tun.te
-    dest: '{{ openstack_nova_compute_selinux_policy_dir }}/qemu-kvm-tun.te'
-    register: custom_policy_output
+    src: qemu-kvm-tun.pp
+    dest: '{{ openstack_nova_compute_selinux_policy_dir }}/qemu-kvm-tun.pp'
+  register: custom_policy_output
   when: ansible_os_family == 'RedHat'
 
 - name: Load custom selinux policy
-  command: /usr/sbin/semodule -u {{ openstack_nova_compute_selinux_policy_dir }}/qemu-kvm-tun.te
+  command: /usr/sbin/semodule -u {{ openstack_nova_compute_selinux_policy_dir }}/qemu-kvm-tun.pp
   when:
     - ansible_os_family == 'RedHat'
     - custom_policy_output.changed
