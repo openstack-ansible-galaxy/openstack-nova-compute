@@ -4,3 +4,13 @@
   service:
     name: '{{ openstack_nova_compute_service }}'
     state: restarted
+
+- name: Reload apparmor
+  service:
+    name: 'apparmor'
+    state: reloaded
+
+- name: Restart libvirt
+  service:
+    name: '{{ openstack_nova_compute_libvirt_service }}'
+    state: restarted

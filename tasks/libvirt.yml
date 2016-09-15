@@ -34,3 +34,14 @@
   when:
     - ansible_os_family == 'RedHat'
     - custom_policy_output.changed
+
+- name: Add custom AppArmor policy
+  blockinfile:
+    dest: '{{ openstack_nova_compute_apparmor_policy_path }}'
+    marker: '# {mark} Midonet'
+    block: |
+        /dev/net/tun rw,
+  when: ansible_os_family == 'Debian'
+  notify:
+    - Reload apparmor
+    - Restart libvirt
