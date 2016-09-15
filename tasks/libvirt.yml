@@ -38,9 +38,9 @@
 - name: Add custom AppArmor policy
   blockinfile:
     dest: '{{ openstack_nova_compute_apparmor_policy_path }}'
-    marker: '# {mark} Midonet'
-    block: |
-        /dev/net/tun rw,
+    marker: '  # {mark} Midonet'
+    insertbefore: '^\}$'
+    block: '  /dev/net/tun rw,'
   when: ansible_os_family == 'Debian'
   notify:
     - Reload apparmor
