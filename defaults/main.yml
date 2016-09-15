@@ -31,4 +31,6 @@ openstack_nova_compute_neutron_metadata_secret: 'somefnordity'
 # Use 'qemu' for hosts wihout HW virtualization (i.e. CinC)
 openstack_nova_compute_nova_virt_type: 'kvm'
 # Used in midonet and other networking plugins
+openstack_nova_compute_selinux_policy_dir: '/etc/selinux/custom-policies'
+openstack_nova_compute_apparmor_policy_path: '/etc/apparmor.d/usr.lib.libvirt.virt-aa-helper'
 openstack_nova_compute_add_tun_acl: False
