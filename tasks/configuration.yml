@@ -123,3 +123,16 @@
     - section: libvirt
       option: virt_type
       value: '{{ openstack_nova_compute_nova_virt_type }}'
+    # VNC
+    - section: DEFAULT
+      option: vncserver_listen
+      value: 0.0.0.0
+    - section: DEFAULT
+      option: vncserver_proxyclient_address
+      value: '{{ openstack_nova_compute_vncserver_proxyclient_address }}'
+    - section: DEFAULT
+      option: novncproxy_base_url
+      value: '{{ openstack_nova_compute_novncproxy_base_url }}'
+    - section: DEFAULT
+      option: compute_driver
+      value: 'libvirt.LibvirtDriver'
