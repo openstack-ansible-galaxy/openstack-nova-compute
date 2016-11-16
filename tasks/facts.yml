@@ -1,13 +1,15 @@
 ---
 
-- name: Set service facts
+- name: Set facts
   set_fact:
+    openstack_nova_compute_compute_conf: '/etc/nova/nova-compute.conf'
     openstack_nova_compute_libvirt_service: 'libvirt-bin'
     openstack_nova_compute_service: 'nova-compute'
   when: ansible_os_family == 'Debian'
 
-- name: Set service facts
+- name: Set facts
   set_fact:
+    openstack_nova_compute_compute_conf: '/etc/nova/nova.conf'
     openstack_nova_compute_libvirt_service: 'libvirtd.service'
     openstack_nova_compute_service: 'openstack-nova-compute.service'
   when: ansible_os_family == 'RedHat'
